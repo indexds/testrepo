@@ -1,0 +1,188 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Patient",
+        "version": "1.0.0",
+        "description": "Test API."
+    },
+    "paths": {
+        "/patients": {
+            "summary": "Path used to manage the list of patients.",
+            "description": "The REST endpoint/path used to list and create zero or more `Patient` entities.  This path contains a `GET` and `POST` operation to perform the list and create tasks, respectively.",
+            "get": {
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Patient"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "Successful response - returns an array of `Patient` entities."
+                    }
+                },
+                "operationId": "getPatients",
+                "summary": "List All Patients",
+                "description": "Gets a list of all `Patient` entities."
+            },
+            "post": {
+                "requestBody": {
+                    "description": "A new `Patient` to be created.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Patient"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful response."
+                    }
+                },
+                "operationId": "createPatient",
+                "summary": "Create a Patient",
+                "description": "Creates a new instance of a `Patient`."
+            }
+        },
+        "/patients/{patientId}": {
+            "summary": "Path used to manage a single Patient.",
+            "description": "The REST endpoint/path used to get, update, and delete single instances of an `Patient`.  This path contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete tasks, respectively.",
+            "get": {
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Patient"
+                                }
+                            }
+                        },
+                        "description": "Successful response - returns a single `Patient`."
+                    }
+                },
+                "operationId": "getPatient",
+                "summary": "Get a Patient",
+                "description": "Gets the details of a single instance of a `Patient`."
+            },
+            "put": {
+                "requestBody": {
+                    "description": "Updated `Patient` information.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Patient"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful response."
+                    }
+                },
+                "operationId": "updatePatient",
+                "summary": "Update a Patient",
+                "description": "Updates an existing `Patient`."
+            },
+            "delete": {
+                "responses": {
+                    "204": {
+                        "description": "Successful response."
+                    }
+                },
+                "operationId": "deletePatient",
+                "summary": "Delete a Patient",
+                "description": "Deletes an existing `Patient`."
+            },
+            "parameters": [
+                {
+                    "name": "patientId",
+                    "description": "A unique identifier for a `Patient`.",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "path",
+                    "required": true
+                }
+            ]
+        },
+        "/patients/search": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "ssn",
+                        "description": "Social Security Number",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+
+                            }
+                        },
+                        "description": "Returns the patient with the given social security number"
+                    },
+                    "404": {
+                        "content": {
+                            "application/json": {
+
+                            }
+                        },
+                        "description": "SSN Not Found."
+                    }
+                },
+                "deprecated": false,
+                "summary": "Search a patient with social security number"
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Patient": {
+                "title": "Root Type for Patient",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "birthdate": {
+                        "type": "string"
+                    },
+                    "sex": {
+                        "type": "string"
+                    },
+                    "ssn": {
+                        "format": "int32",
+                        "type": "integer"
+                    }
+                },
+                "example": {
+                    "id": 0,
+                    "name": "test",
+                    "birthdate": "01-01-1970",
+                    "sex": "male",
+                    "ssn": 123456789
+                }
+            }
+        }
+    }
+}
